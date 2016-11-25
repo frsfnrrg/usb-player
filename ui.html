@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name=viewport content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="favicon.ico" />
+<title>Autoplay server</title>
+<style type="text/css">
+body{margin:40px auto;max-width:650px;line-height:1.2;padding:0 
+3px;background-color:#eeffff;}
+h2,h3,h4{line-height:1.2}
+svg{float:right;}
+</style>
+</head>
+<body id="body">
+<h2>Selection:</h2>
+<p>
+<select id="picker" onchange="prop(this)">{% for item in items %}
+<option {% if sel == item %}selected="selected" {% end %}value="{{escape(item)}}">{{escape(item)}}</option>{% end %}
+</select>
+</p>
+<script type="text/javascript">
+document.getElementById("picker").selectedIndex = {{ iidx }};
+var ws = new WebSocket("ws://"+location.host+"/selection");			
+var opened = false
+ws.onopen = function() {
+    opened = true;
+};
+function prop(ctl) {
+   if (opened) { ws.send(ctl.value) }
+}			
+ws.onmessage = function (evt) { 
+    document.getElementById("picker").selectedIndex = parseInt(evt.data);
+};                     
+ws.onclose = function() { 
+    opened=false;
+    document.getElementById("body").style.backgroundColor="#ff8888";
+};
+</script>
+</body>
+</html>
