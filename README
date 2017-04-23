@@ -1,0 +1,22 @@
+# Requirements
+
+python (3)
+mplayer
+alsa
+usbmount
+python-tornado (for webserver)
+
+mpg123 (opt)
+
+# To check config options
+
+aplay -L 
+aplay --list-devices
+
+# To install
+
+Copy `usbplayer.service` to /lib/systemd/system/
+
+   sudo systemctl enable usbplayer.service
+   sudo systemctl start usbplayer.service
+

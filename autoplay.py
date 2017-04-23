@@ -7,25 +7,6 @@ import time
 import subprocess
 import pwd
 
-"""
-Need: mplayer, mpg123, alsa, usbmount for usb automounting
-
-Note: aplay -L and aplay --list-devices help for config options
-
-# Here follows the appropriate systemd unit file
-
-[Unit]
-Description=Automatically play music from an mp3
-
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/python3 /home/odroid/bin/autoplay.py /media/usb0
-
-[Install]
-WantedBy=multi-user.target
-
-"""
-
 endings = {'ogg', 'mp3', 'wav', 'm4a'}
 
 
@@ -46,6 +27,8 @@ def runloop(directory):
                 continue
             print("Playing:", c)
             try:
+                # May need to swap between options if audio doesn't work               
+
                 #opts = ['-ao','alsa:device=plughw=1.0']
                 opts = []
                 cmd = ["mplayer", '-novideo'] + opts + [c]

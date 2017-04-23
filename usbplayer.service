@@ -1,0 +1,12 @@
+[Unit]
+Description=Automatically play music from an mp3
+
+[Service]
+Type=oneshot
+# Server permits folder control but opens up a port
+#ExecStart=/usr/bin/python3 /home/pi/bin/server.py /media/usb0
+# Autoplay just plays the music
+ExecStart=/usr/bin/python3 /home/pi/bin/autoplay.py /media/usb0
+
+[Install]
+WantedBy=multi-user.target
