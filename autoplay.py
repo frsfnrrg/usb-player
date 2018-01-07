@@ -25,7 +25,6 @@ def runloop(directory):
         for c in choices:
             if not os.path.exists(c):
                 continue
-            print("Playing:", c)
             try:
                 # May need to swap between options if audio doesn't work               
 
@@ -33,7 +32,9 @@ def runloop(directory):
                 opts = []
                 cmd = ["mplayer", '-novideo'] + opts + [c]
                 print(cmd)
-                subprocess.call(cmd, stdin=subprocess.DEVNULL)
+                subprocess.call(cmd, stdin=subprocess.DEVNULL,
+                                stdout=subprocess.DEVNULL,
+                                stderr=subprocess.DEVNULL)
             except subprocess.SubprocessError as e:
                 print(e)
                 pass
